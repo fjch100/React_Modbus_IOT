@@ -1,0 +1,56 @@
+.componentContainer {
+  background: hsl(0, 0%, 37%);
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  width: 118px;
+  margin-top: 0;
+}
+
+.componentInnerContainer {
+  padding-top: 20px;
+  width: 70%;
+}
+
+.componentName {
+  font-size: 16px;
+  color: white;
+}
+
+.IconContainerON {
+  border: 1px #b8b8b8 solid;
+  border-radius: 50%;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background: #4df5a1;
+  cursor: pointer;
+}
+
+.IconContainerOFF {
+  border: 1px #b8b8b8 solid;
+  border-radius: 50%;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background: #979797;
+  cursor: pointer;
+}
+
+.icono {
+  font-size: 30px;
+}
+
+.componentState {
+  padding-top: 15px;
+  color: white;
+}

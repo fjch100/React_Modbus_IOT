@@ -1,0 +1,19 @@
+.gridHeaderAll {
+  border: 1px #817c7c solid;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.gridContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.gridHeader {
+  background-color: #464545;
+  padding-left: 10px;
+  text-align: left;
+  margin-bottom: 0;
+}
