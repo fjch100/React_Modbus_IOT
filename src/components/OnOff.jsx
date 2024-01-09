@@ -13,11 +13,11 @@ function OnOff({ id, name, estado, onStateChange }) {
     return (
         <div className={classes.componentContainer}>
             <div className={classes.componentName}>{name} - ({id})</div>
-            <div className={classes.componentInnerContainer}>
-                <div className={estado ? classes.IconContainerON : classes.IconContainerOFF} onClick={onStateChange}>
-                    <span className={classes.icono}><FaPowerOff />
+            <div name={name} className={classes.componentInnerContainer}>
+                <button type="button" name={name} className={estado ? classes.IconContainerON : classes.IconContainerOFF} onClick={onStateChange}>
+                    <span className={classes.icono} name={name}><FaPowerOff name={name} />
                     </span>
-                </div>
+                </button>
                 <div className={classes.componentState}>{state}</div>
             </div>
         </div>

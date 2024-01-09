@@ -1,41 +1,68 @@
-import React from 'react'
+import React, { useState } from 'react'
 import classes from './GridContainer.module.css'
 import OnOff from './OnOff'
 import OnOffInput from './OnOffInput';
 
-let coils = [
-    { name: "Coil0", id: "%Q0.0" },
-    { name: "Coil1", id: "%Q0.1" },
-    { name: "Coil2", id: "%Q0.2" },
-    { name: "Coil3", id: "%Q0.3" }
+let coilsArray = [
+    { name: "Coil0", id: "%Q0.0", state: false },
+    { name: "Coil1", id: "%Q0.1", state: false },
+    { name: "Coil2", id: "%Q0.2", state: false },
+    { name: "Coil3", id: "%Q0.3", state: false }
 ];
 
-let inputs = [
-    { name: "Dig_In0", id: "%I0.0" },
-    { name: "Dig_In1", id: "%I0.1" },
-    { name: "Dig_In2", id: "%I0.2" },
-    { name: "Dig_In3", id: "%I0.3" },
-    { name: "Dig_In4", id: "%I0.4" }
+let inputsArray = [
+    { name: "Dig_In0", id: "%I0.0", state: false },
+    { name: "Dig_In1", id: "%I0.1", state: false },
+    { name: "Dig_In2", id: "%I0.2", state: false },
+    { name: "Dig_In3", id: "%I0.3", state: false },
+    { name: "Dig_In4", id: "%I0.4", state: false }
 ];
 
 
 function GridContainer({ gridType, estados }) {
+    const [coils, setCoils] = useState(coilsArray);
+    const [inputs, setInputs] = useState(inputsArray);
+
+    function coilStateHandler(event) {
+        // console.log(event.target);
+        let el = event.target.attributes.name || event.target.parentElement.attributes.name;
+        if (!el) {
+            return;
+        }
+        let coilNumber = Number(el.nodeValue[4])
+        // console.log(coilNumber);
+        let Coils = [...coils];
+        Coils[coilNumber].state = !Coils[coilNumber].state
+        setCoils(Coils);
+    }
+
+    function inputStateHandler(event) {
+        // console.log(event.target);
+        let el = event.target.attributes.name || event.target.parentElement.attributes.name;
+        if (!el) {
+            return;
+        }
+        let inputNumber = Number(el.nodeValue[6])
+        // console.log(coilNumber);
+        let Inputs = [...inputs];
+        Inputs[inputNumber].state = !Inputs[inputNumber].state
+        setInputs(Inputs);
+    }
+
     let content;
     if (gridType === 'Coils') {
         content = <div className={classes.gridContainer}>
-            <OnOff name={coils[0].name} id={coils[0].id} estado={estados[0]} />
-            <OnOff name={coils[1].name} id={coils[1].id} estado={estados[1]} />
-            <OnOff name={coils[2].name} id={coils[2].id} estado={estados[2]} />
-            <OnOff name={coils[3].name} id={coils[3].id} estado={estados[3]} />
+            {coils.map((coil) =>
+                <OnOff key={coil.id} name={coil.name} id={coil.id} estado={coil.state} onStateChange={coilStateHandler} />
+            )}
         </div>;
     }
+
     if (gridType === 'Inputs') {
         content = <div className={classes.gridContainer}>
-            <OnOffInput name={inputs[0].name} id={inputs[0].id} estado={estados[0]} />
-            <OnOffInput name={inputs[1].name} id={inputs[1].id} estado={estados[1]} />
-            <OnOffInput name={inputs[2].name} id={inputs[2].id} estado={estados[2]} />
-            <OnOffInput name={inputs[3].name} id={inputs[3].id} estado={estados[3]} />
-            <OnOffInput name={inputs[4].name} id={inputs[4].id} estado={estados[4]} />
+            {inputs.map((input) =>
+                <OnOffInput key={input.id} name={input.name} id={input.id} estado={input.state} onStateChange={inputStateHandler} />
+            )}
         </div>;
     }
 

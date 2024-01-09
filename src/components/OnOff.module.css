@@ -31,6 +31,7 @@
   color: white;
   background: #4df5a1;
   cursor: pointer;
+  width: 100%;
 }
 
 .IconContainerOFF {
@@ -44,6 +45,7 @@
   color: white;
   background: #979797;
   cursor: pointer;
+  width: 100%;
 }
 
 .icono {
