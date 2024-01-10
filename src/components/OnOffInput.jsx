@@ -17,7 +17,7 @@ function OnOffInput({ id, name, estado, onStateChange }) {
                     <span name={name} className={classes.icono}><FaPowerOff name={name} />
                     </span>
                 </button>
-                <div className={classes.componentState}>{state}</div>
+                <div className={estado ? classes.componentStateOn : classes.componentStateOff}>{state}</div>
             </div>
         </div>
     )

@@ -32,6 +32,7 @@
   background: #4df5a1;
   cursor: pointer;
   width: 100%;
+  box-shadow: 6px 3px 19px -6px rgba(33, 247, 78, 0.75);
 }
 
 .IconContainerOFF {
@@ -52,7 +53,12 @@
   font-size: 30px;
 }
 
-.componentState {
+.componentStateOff {
   padding-top: 15px;
   color: white;
+}
+
+.componentStateOn {
+  padding-top: 15px;
+  color: #00ff00;
 }

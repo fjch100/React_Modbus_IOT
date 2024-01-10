@@ -18,7 +18,7 @@ function OnOff({ id, name, estado, onStateChange }) {
                     <span className={classes.icono} name={name}><FaPowerOff name={name} />
                     </span>
                 </button>
-                <div className={classes.componentState}>{state}</div>
+                <div className={estado ? classes.componentStateOn : classes.componentStateOff}>{state}</div>
             </div>
         </div>
     )
