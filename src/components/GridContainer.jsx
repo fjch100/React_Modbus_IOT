@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import classes from './GridContainer.module.css'
 import OnOff from './OnOff'
 import OnOffInput from './OnOffInput';
@@ -18,10 +18,88 @@ let inputsArray = [
     { name: "Dig_In4", id: "%I0.4", state: false }
 ];
 
+const MbUrl = 'http://localhost:3000/api/modbus/';
 
 function GridContainer({ gridType, estados }) {
     const [coils, setCoils] = useState(coilsArray);
     const [inputs, setInputs] = useState(inputsArray);
+    const [error, setError] = useState(null);
+
+    //read Coils initial value from modbusRTU
+    useEffect(() => {
+        let timer = setInterval(() => {
+            getCoils();
+            sleepMs(200);
+            getInputs();
+        }, 500)
+
+        return () => {
+            clearInterval(timer);
+        }
+    }, [])
+
+    const getCoils = async () => {
+        try {
+            const response = await fetch(MbUrl + 'readcoils');
+            if (!response.ok) {
+                throw new Error('Something went wrong!')
+            }
+            console.log(response);
+            const data = await response.json();
+            console.log(data);
+            let newCoils = [...coils];
+            let fetchedCoils = data.data;
+            for (let i = 0; i < newCoils.length; i++) {
+                newCoils[i].state = fetchedCoils[i];
+            }
+            setCoils(newCoils)
+        } catch (error) {
+            setError(error.message);
+        }
+
+        // let newCoils = [...coils];
+        // let fetchedCoils = data.data;
+        // for (let i = 0; i < newCoils.length; i++) {
+        //     newCoils[i].state = fetchedCoils[i];
+        // }
+        // setCoils(newCoils)
+        // .then(response => response.json())
+        // .then(data => {
+        //     console.log(data);
+        //     let newCoils = [...coils];
+        //     let fetchedCoils = data.data;
+        //     for (let i = 0; i < newCoils.length; i++) {
+        //         newCoils[i].state = fetchedCoils[i];
+        //     }
+        //     setCoils(newCoils)
+
+        // });
+    }
+
+    const getInputs = async () => {
+        try {
+            const response = await fetch(MbUrl + 'readinputs');
+            if (!response.ok) {
+                throw new Error('Something went wrong!')
+            }
+            console.log(response);
+            const data = await response.json();
+            console.log(data);
+            let newInputs = [...inputs];
+            let fetchedInputs = data.data;
+            for (let i = 0; i < newInputs.length; i++) {
+                newInputs[i].state = fetchedInputs[i];
+            }
+            setInputs(newInputs);
+        } catch (error) {
+            setError(error.message);
+        }
+    }
+
+
+    const sleepMs = async (ms) => {
+        await new Promise(r => setTimeout(r, ms));
+    }
 
     function coilStateHandler(event) {
         // console.log(event.target);
@@ -29,7 +107,8 @@ function GridContainer({ gridType, estados }) {
         if (!el) {
             return;
         }
-        let coilNumber = Number(el.nodeValue[4])
+        //get the coil number from  el= "Coil0" => "0"
+        let coilNumber = Number(el.nodeValue[4])//
         // console.log(coilNumber);
         let Coils = [...coils];
         Coils[coilNumber].state = !Coils[coilNumber].state
